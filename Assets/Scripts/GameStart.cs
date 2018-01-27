@@ -39,16 +39,18 @@ public class GameStart : MonoBehaviour {
 		startBtn.gameObject.SetActive (false);
 		if (level == 1) {
 			LevelManager.SetFloatLevel(1.1f);
+			OrganManager.RefreshOrgans ();
 		}
 		if (level == 1.1f) {
 			LevelManager.SetFloatLevel(2.0f);
+			OrganManager.RefreshOrgans ();
 		}
 		if (level == 2.0f) {
 			LevelManager.SetFloatLevel(3.0f);
 			OrganManager.RefreshOrgans ();
 		}
 		if (level == 3.0f) {
-			LevelManager.SetFloatLevel(3.1f);
+			SceneManager.LoadScene ("Ending");
 		}
 		Timer.Init ();
 		Debug.Log (LevelManager.GetFloatLevel());

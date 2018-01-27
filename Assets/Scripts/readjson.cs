@@ -35,13 +35,7 @@ public class ThreholdCollection {
 
 public class readjson : MonoBehaviour {
 //	define the class of threhold
-<<<<<<< HEAD
 	public int section=LevelManager.GetLevel();
-	public ThreholdCollectionFirst collecteddataFirst = new ThreholdCollectionFirst();
-=======
-	public int section=1;
-//	public ThreholdCollectionFirst collecteddataFirst = new ThreholdCollectionFirst();
->>>>>>> origin/master
 	public ThreholdCollection collecteddata = new ThreholdCollection();
 
 

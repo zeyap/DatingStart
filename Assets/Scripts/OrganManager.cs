@@ -56,7 +56,7 @@ public class OrganManager : MonoBehaviour {
 	public static void RefreshOrgans(){
 		InitPositions ();
 		for (int i = 0; i < organNum; i++) {
-			organs [i].transform.Translate (positions[i]);
+			organs [i].transform.position=positions[i];
 		}
 		chosenCount = 0;
 		lastPressTime=0;
@@ -64,31 +64,35 @@ public class OrganManager : MonoBehaviour {
 	}
 
 	static void InitPositions(){
-		int level = LevelManager.GetLevel();
+		float x1 = Screen.width/2+225,y1 =Screen.height/2-86,x2=Screen.width/2+366,y2=Screen.height/2-207;
 		Vector3 posOut = new Vector3 (999,999,0);
+
+		int level = LevelManager.GetLevel();
+
 		switch (level) {
 		case 1:
 			{
 				positions [0].x =posOut.x;positions [0].y =posOut.y;positions [0].z =10;//heart
-				positions [1].x=311;positions [1].y=-17;positions [1].z =10;//brain
+				positions [1].x=x2;positions [1].y=y1;positions [1].z =10;//brain
 				positions [2].x=posOut.x;positions [2].y=posOut.y;positions [2].z =10;//stomach
-				positions [3].x=311;positions [3].y=-138;positions [3].z =10;//spine
+				positions [3].x=x2;positions [3].y=y2;positions [3].z =10;//spine
 				break;}
 		case 2:
 			{
-				positions [0].x =190;positions [0].y =-17;positions [0].z =10;//heart
-				positions [1].x=311;positions [1].y=-17;positions [1].z =10;//brain
+				positions [0].x =x1;positions [0].y =y1;positions [0].z =10;//heart
+				positions [1].x=x2;positions [1].y=y1;positions [1].z =10;//brain
 				positions [2].x=posOut.x;positions [2].y=posOut.y;positions [2].z =10;//stomach
-				positions [3].x=311;positions [3].y=-138;positions [3].z =10;//spine
+				positions [3].x=x2;positions [3].y=y2;positions [3].z =10;//spine
 				break;}
 		case 3:
 			{
-				positions [0].x =190;positions [0].y =-17;positions [0].z =10;//heart
-				positions [1].x=311;positions [1].y=-17;positions [1].z =10;//brain
-				positions [2].x=190;positions [2].y=-138;positions [2].z =10;//stomach
-				positions [3].x=311;positions [3].y=-138;positions [3].z =10;//spine
+				positions [0].x =x1;positions [0].y =y1;positions [0].z =10;//heart
+				positions [1].x=x2;positions [1].y=y1;positions [1].z =10;//brain
+				positions [2].x=x1;positions [2].y=y2;positions [2].z =10;//stomach
+				positions [3].x=x2;positions [3].y=y2;positions [3].z =10;//spine
 				break;}
 		}
+
 	}
 	
 	// Update is called once per frame
