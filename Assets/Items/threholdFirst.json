@@ -1,0 +1,14 @@
+{
+"threholds": [
+    {
+    "organ": "brain",
+    "index": 1,
+    "middle": 80
+    },
+    {
+    "organ": "bone",
+    "index": 3,
+    "middle": 80
+    }
+]
+}

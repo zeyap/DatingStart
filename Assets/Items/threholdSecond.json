@@ -1,0 +1,22 @@
+{
+    "threholds": [
+      {
+        "organ": "heart",
+        "index": 0,
+        "lowLevel": 40,
+        "highLevel": 70
+      },
+      {
+        "organ": "brain",
+        "index": 1,
+        "lowLevel": 40,
+        "highLevel": 70
+      },
+      {
+        "organ": "bone",
+        "index": 3,
+        "lowLevel": 40,
+        "highLevel": 70
+      }
+    ]
+  }
