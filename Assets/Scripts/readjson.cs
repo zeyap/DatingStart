@@ -35,9 +35,8 @@ public class ThreholdCollection {
 
 public class readjson : MonoBehaviour {
 //	define the class of threhold
-	public int section=LevelManager.GetLevel();
-	public ThreholdCollection collecteddata = new ThreholdCollection();
-
+	public int section;
+	public List<ThreholdCollection> collecteddatas;
 
 	public int organNumber = 2;
 	public int[] intLevel = new int[4]; 
@@ -47,6 +46,7 @@ public class readjson : MonoBehaviour {
 
 //	public string gameDataFileName = "Items/threholdFirst.json";
 	public List<string> FileName;
+	public List <string> filePaths;
 
 //	public string FileName = "Items/threholdFirst.json";
 
@@ -55,53 +55,54 @@ public class readjson : MonoBehaviour {
 		FileName.Add ("Items/threholdFirst.json");
 		FileName.Add ("Items/threholdSecond.json");
 		FileName.Add ("Items/threholdThird.json");
+		section = LevelManager.GetLevel() - 1;
 		LoadGameData();
 	}
 
 	// Update is called once per frame
 	void Update () {
 		result = 0;
+		section = LevelManager.GetLevel() - 1;
+		organNumber = collecteddatas[section].threholds.Count;
+		totalNumber = (int)Math.Pow (3, organNumber);
 		float[] scores = OrganManager.loadScore ();
 		if (organNumber == 2) {
 			for (int i = 0; i < organNumber; i++) {
 //				Debug.Log ("index" + collecteddataFirst.threholds [i].index);
-				bloodLevel [i] = scores [collecteddata.threholds [i].index];
-				Debug.Log (collecteddata.threholds [i].organ + ": " + bloodLevel [i]);
+				bloodLevel [i] = scores [collecteddatas[section].threholds [i].index];
+//				Debug.Log (collecteddatas[section].threholds [i].organ + ": " + bloodLevel [i]);
 			}
 			reaction (bloodLevel);	
 
 		} else {
 			for (int i = 0; i < organNumber; i++) {
-				bloodLevel [i] = scores [collecteddata.threholds [i].index];
-				Debug.Log (collecteddata.threholds [i].organ + ": " +bloodLevel [i]);
+				bloodLevel [i] = scores [collecteddatas[section].threholds [i].index];
+//				Debug.Log (collecteddatas[section].threholds [i].organ + ": " + bloodLevel [i]);
 			}
 			reaction (bloodLevel);
 		} 
+
 	}
 
 	public void LoadGameData()
 	{
 		// Path.Combine combines strings into a file path
 		// Application.StreamingAssets points to Assets/StreamingAssets in the Editor, and the StreamingAssets folder in a build
-		string filePath = Path.Combine (Application.dataPath, FileName[section - 1]);
-		Debug.Log (filePath);
-		if(File.Exists(filePath))
-		{
-			// Read the json from the file into a string
-			string dataAsJson = File.ReadAllText(filePath);
-			if (section == 1) {
+		for (int i = 0; i < 3; i++) {
+			filePaths.Add(Path.Combine(Application.dataPath, FileName[i]));
+			Debug.Log (filePaths[i]);
+			if(File.Exists(filePaths[i])){
+				// Read the json from the file into a string
+				string dataAsJson = File.ReadAllText(filePaths[i]);
+				ThreholdCollection collecteddata = new ThreholdCollection ();
 				JsonUtility.FromJsonOverwrite (dataAsJson, collecteddata);
-				organNumber = collecteddata.threholds.Count;
-			} else {
-				JsonUtility.FromJsonOverwrite (dataAsJson, collecteddata);
-				organNumber = collecteddata.threholds.Count;
+				collecteddatas.Add (collecteddata);
+			} else{
+				Debug.LogError("Cannot load game data!");
 			}
-			totalNumber = (int)Math.Pow (3, organNumber);
 		}
-		else
-		{
-			Debug.LogError("Cannot load game data!");
-		}
+		organNumber = collecteddatas[section].threholds.Count;
+		totalNumber = (int)Math.Pow (3, organNumber);
 	}
 
 	int temreturnLevel(float ratio, float middle){
@@ -122,18 +123,18 @@ public class readjson : MonoBehaviour {
 		}
 	}
 
-	void reactionFirst(float[] bloodLevel){
-		// brain, stomach, spinalCord, lung
-		for (int i = 0; i < organNumber; i++) {
-			intLevel [i] = temreturnLevel (bloodLevel [i], collecteddata.threholds[i].lowLevel);
-			result += intLevel [i] * (int)Math.Pow (2, organNumber - i - 1);
-		}
-	}
+//	void reactionFirst(float[] bloodLevel){
+//		// brain, stomach, spinalCord, lung
+//		for (int i = 0; i < organNumber; i++) {
+//			intLevel [i] = temreturnLevel (bloodLevel [i], collecteddata.threholds[i].lowLevel);
+//			result += intLevel [i] * (int)Math.Pow (2, organNumber - i - 1);
+//		}
+//	}
 
 	void reaction(float[] bloodLevel){
 		// brain, stomach, spinalCord, lung
 		for (int i = 0; i < organNumber; i++) {
-			intLevel [i] = returnLevel (bloodLevel [i], collecteddata.threholds[i].lowLevel, collecteddata.threholds[i].highLevel);
+			intLevel [i] = returnLevel (bloodLevel [i], collecteddatas[section].threholds[i].lowLevel, collecteddatas[section].threholds[i].highLevel);
 			result += intLevel [i] * (int)Math.Pow (3, organNumber - i - 1);
 		}
 	}

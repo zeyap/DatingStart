@@ -5,11 +5,13 @@ using UnityEngine;
 
 public class ChangeImage : MonoBehaviour{
     public int choice = 9;
-    private ArrayList spriteList = new ArrayList();
+    private ArrayList spriteListFirst = new ArrayList();
+	private ArrayList spriteListSecond = new ArrayList();
     private Animation anim;
     private GameObject superman;
     private GameObject star;
 	private int totalNumber;
+	private int level;
     // Use this for initialization
     void Start () {
         anim = GetComponent<Animation>();
@@ -18,24 +20,39 @@ public class ChangeImage : MonoBehaviour{
         star = GameObject.Find("star");
         star.SetActive(false);
 		totalNumber = readjson.getTotalNumber ();
-		for (int i = 0; i <= totalNumber; i++)
+		for (int i = 0; i <= 9; i++)
         {
             string fileName = "1_" + i.ToString();
             Sprite s = Resources.Load<Sprite>(fileName);
-            spriteList.Add(s);
+            spriteListFirst.Add(s);
         }
-		GetComponent<SpriteRenderer>().sprite = (Sprite)spriteList[totalNumber];
+		for (int i = 0; i <= 27; i++)
+		{
+			string fileName = "2_" + i.ToString();
+			Sprite s = Resources.Load<Sprite>(fileName);
+			spriteListSecond.Add(s);
+		}
+		GetComponent<SpriteRenderer>().sprite = (Sprite)spriteListFirst[totalNumber];
         anim.Play("fadein");
     }
 	
 	// Update is called once per frame
 	void Update () {
 		choice=readjson.getResult();
-//		Debug.Log("total number" + totalNumber);
-		if(choice < totalNumber)
-        {	
-            Sprite s = (Sprite)spriteList[choice];
-            GetComponent<SpriteRenderer>().sprite = s;
-        }
+		level = LevelManager.GetLevel ();
+		totalNumber = readjson.getTotalNumber ();
+		Debug.Log("result:" + choice);
+		if (level == 1) {
+			if (choice < totalNumber) {
+				Sprite s = (Sprite)spriteListFirst [choice];
+				GetComponent<SpriteRenderer> ().sprite = s;
+			}
+		} else if (level == 2) {
+			if (choice < totalNumber) {	
+				Sprite s = (Sprite)spriteListSecond [choice];
+				GetComponent<SpriteRenderer> ().sprite = s;
+			}	
+		}
+
     }
 }
