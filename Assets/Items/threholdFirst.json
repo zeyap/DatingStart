@@ -3,12 +3,14 @@
     {
     "organ": "brain",
     "index": 1,
-    "middle": 80
+    "lowLevel": 30,
+    "highLevel": 60
     },
     {
     "organ": "bone",
     "index": 3,
-    "middle": 80
+    "lowLevel": 30,
+    "highLevel": 60
     }
 ]
 }

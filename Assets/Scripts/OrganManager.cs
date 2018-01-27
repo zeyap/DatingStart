@@ -98,6 +98,7 @@ public class OrganManager : MonoBehaviour {
 		if (Input.GetMouseButtonDown(1)) {//right click
 			DisableLine ();
 		}
+		print ("result: " + readjson.result); 
 	}
 
 	IEnumerator MeterRotate(){
