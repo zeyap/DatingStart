@@ -44,6 +44,7 @@ public class readjson : MonoBehaviour {
 	public int[] intLevel = new int[4]; 
 	public float[] bloodLevel = new float[4]; 
 	public static int result = 0;
+	public static int totalNumber = 0;
 
 //	public string gameDataFileName = "Items/threholdFirst.json";
 	public List<string> FileName;
@@ -96,6 +97,7 @@ public class readjson : MonoBehaviour {
 				JsonUtility.FromJsonOverwrite (dataAsJson, collecteddata);
 				organNumber = collecteddata.threholds.Count;
 			}
+			totalNumber = (int)Math.Pow (3, organNumber);
 		}
 		else
 		{
@@ -136,8 +138,12 @@ public class readjson : MonoBehaviour {
 			result += intLevel [i] * (int)Math.Pow (3, organNumber - i - 1);
 		}
 	}
-
+		
 	public static int getResult(){
 		return result;
+	}
+
+	public static int getTotalNumber(){
+		return totalNumber;
 	}
 }
