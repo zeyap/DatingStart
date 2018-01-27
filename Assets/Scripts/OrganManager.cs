@@ -56,10 +56,10 @@ public class OrganManager : MonoBehaviour {
 	}
 
 	void InitPositions(){
-		positions [0].x =225;positions [0].y =-17;positions [0].z =10;
-		positions [1].x=346;positions [1].y=-17;positions [1].z =10;
-		positions [2].x=225;positions [2].y=-138;positions [2].z =10;
-		positions [3].x=346;positions [3].y=-138;positions [3].z =10;
+		positions [0].x =190;positions [0].y =-17;positions [0].z =10;
+		positions [1].x=311;positions [1].y=-17;positions [1].z =10;
+		positions [2].x=190;positions [2].y=-138;positions [2].z =10;
+		positions [3].x=311;positions [3].y=-138;positions [3].z =10;
 	}
 	
 	// Update is called once per frame
@@ -69,7 +69,7 @@ public class OrganManager : MonoBehaviour {
 		if (Input.GetMouseButtonDown(1)) {//right click
 			DisableLine ();
 		}
-		print (readjson.getResult ());
+
 	}
 
 	IEnumerator MeterRotate(){
@@ -98,7 +98,7 @@ public class OrganManager : MonoBehaviour {
 		lastPressTime = thisPressTime;
 		thisPressTime = Time.realtimeSinceStartup;
 		meterRot=valence*3.0f/(thisPressTime-lastPressTime);
-		Debug.Log (meterRot);
+		//Debug.Log (meterRot);
 		StartCoroutine (MeterRotate());
 	}
 		
@@ -106,13 +106,14 @@ public class OrganManager : MonoBehaviour {
 		
 		line.positionCount=chosenCount;
 		for(int j=0;j<chosenCount;j++) {
+			
 			line.SetPosition(j,organComps[chosenIdx[j]].chosenPos);
 		}
 
 	}
 	static void DisableLine(){
-		for (int j = 0; j < chosenCount; j++) {
-			organComps[chosenIdx[j]].Disable();
+		for (int j = 0; j <  organNum; j++) {
+			organComps[j].Disable();
 		}
 		chosenCount = 0;
 	}
@@ -124,39 +125,46 @@ public class OrganManager : MonoBehaviour {
 			if (organComps [0].isCriteriaMet ()>0 && organComps [1].isCriteriaMet ()>0 && organComps [2].isCriteriaMet ()>0 && organComps [3].isCriteriaMet ()>0) {
 				float scroll=Input.GetAxis ("Mouse ScrollWheel");
 				if (Input.GetKeyDown (KeyCode.A)||scroll>0) {
-					organComps [chosenIdx [0]].score -= (scoreStep * (chosenCount - 1));
+					organComps [chosenIdx [0]].ChangeScore(-scoreStep * (chosenCount - 1));
 					for (int j = 1; j < chosenCount; j++) {
-						organComps [chosenIdx [j]].score += scoreStep;
+						organComps [chosenIdx [j]].ChangeScore(scoreStep);
 					}
 					CalcSpeed (1);
 				}
 				if (Input.GetKeyDown (KeyCode.D)||scroll<0) {
-					organComps [chosenIdx [0]].score += (scoreStep * (chosenCount - 1));
+					organComps [chosenIdx [0]].ChangeScore(scoreStep * (chosenCount - 1));
 					for (int j = 1; j < chosenCount; j++) {
-						organComps [chosenIdx [j]].score -= scoreStep;
+						organComps [chosenIdx [j]].ChangeScore(-scoreStep);
 					}
 					CalcSpeed (-1);
 				}
 
-				/*Debug.Log (organComps [0].score);
-				Debug.Log (organComps [1].score);
-				Debug.Log (organComps [2].score);
-				Debug.Log (organComps [3].score);
-				Debug.Log (";");
-
-				*/
-
 			}else{
-				for (int i = 0; i < organNum; i++) {
-					if (organComps [i].isCriteriaMet()==1) {
-						organComps [i].score -= scoreStep;
-					}
-					if (organComps [i].isCriteriaMet()==2) {
-						organComps [i].score += scoreStep;
-					}
-				}
+				ReBalanceScores (scoreStep);
 			}
+			Debug.Log (organComps [0].score);
+			Debug.Log (organComps [1].score);
+			Debug.Log (organComps [2].score);
+			Debug.Log (organComps [3].score);
+			Debug.Log (",");
 
+		}
+	}
+
+	void ReBalanceScores (float scoreStep){
+		float offset=0;
+		for (int i = 0; i < organNum; i++) {
+			if (organComps [i].isCriteriaMet()==-1) {
+				organComps [i].ChangeScore(-scoreStep);
+				offset -= scoreStep;
+			}
+			if (organComps [i].isCriteriaMet()==-2) {
+				organComps [i].ChangeScore(scoreStep);
+				offset += scoreStep;
+			}
+		}
+		for (int i = 0; i < organNum; i++) {
+			organComps [i].ChangeScore(offset/organNum);
 		}
 	}
 
