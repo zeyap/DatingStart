@@ -28,6 +28,7 @@ public class ChangeImage : MonoBehaviour{
 	
 	// Update is called once per frame
 	void Update () {
+		choice=readjson.getResult();
         if(choice < 4)
         {
             Sprite s = (Sprite)spriteList[choice];

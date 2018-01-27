@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;   
+using System;
 
 [System.Serializable]
 public class ThreholdFirst{
@@ -34,7 +35,7 @@ public class ThreholdCollection {
 
 public class readjson : MonoBehaviour {
 //	define the class of threhold
-	public int section = 1;
+	public int section=1;
 	public ThreholdCollectionFirst collecteddataFirst = new ThreholdCollectionFirst();
 	public ThreholdCollection collecteddata = new ThreholdCollection();
 
@@ -42,46 +43,48 @@ public class readjson : MonoBehaviour {
 	public int organNumber = 2;
 	public int[] intLevel = new int[4]; 
 	public float[] bloodLevel = new float[4]; 
-	public static int result = 1;
+	public static int result = 0;
 
-	public string gameDataFileName = "Items/threholdFirst.json";
+//	public string gameDataFileName = "Items/threholdFirst.json";
+	public List<string> FileName;
+
 //	public string FileName = "Items/threholdFirst.json";
 
 	// Use this for initialization
 	void Start () {
+		FileName.Add ("Items/threholdFirst.json");
+		FileName.Add ("Items/threholdSecond.json");
+		FileName.Add ("Items/threholdThird.json");
 		LoadGameData();
 	}
 
 	// Update is called once per frame
 	void Update () {
+		result = 0;
 		float[] scores = OrganManager.loadScore ();
 		if (organNumber == 2) {
 			for (int i = 0; i < organNumber; i++) {
 //				Debug.Log ("index" + collecteddataFirst.threholds [i].index);
 				bloodLevel [i] = scores [collecteddataFirst.threholds [i].index];
+//				Debug.Log (collecteddataFirst.threholds [i].organ + ": " + bloodLevel [i]);
 			}
 			reactionFirst (bloodLevel);	
-			Debug.Log (bloodLevel [0]);
-			Debug.Log (bloodLevel [1]);
-		} else if (organNumber == 3) {
-			for (int i = 0; i < organNumber; i++) {
-				bloodLevel [i] = scores [collecteddata.threholds [i].index];
-			}
-			reactionSecond (bloodLevel);
+
 		} else {
 			for (int i = 0; i < organNumber; i++) {
 				bloodLevel [i] = scores [collecteddata.threholds [i].index];
+//				Debug.Log (collecteddata.threholds [i].organ + ": " +bloodLevel [i]);
 			}
-			reactionThird (bloodLevel);
-		}
+			reaction (bloodLevel);
+		} 
 	}
 
 	public void LoadGameData()
 	{
 		// Path.Combine combines strings into a file path
 		// Application.StreamingAssets points to Assets/StreamingAssets in the Editor, and the StreamingAssets folder in a build
-		string filePath = Path.Combine (Application.dataPath, gameDataFileName);
-		Debug.Log (gameDataFileName);
+		string filePath = Path.Combine (Application.dataPath, FileName[section - 1]);
+		Debug.Log (filePath);
 		if(File.Exists(filePath))
 		{
 			// Read the json from the file into a string
@@ -122,59 +125,15 @@ public class readjson : MonoBehaviour {
 		// brain, stomach, spinalCord, lung
 		for (int i = 0; i < organNumber; i++) {
 			intLevel [i] = temreturnLevel (bloodLevel [i], collecteddataFirst.threholds[i].middle);
-		}
-		if (intLevel [0] == 0 && intLevel [1] == 0) {
-			Debug.Log ("Sleepy and casual suit");
-			result = 0;
-		} else if (intLevel [0] == 0 && intLevel [1] == 1) {
-			Debug.Log ("Sleepy and super star eating salted egg ");
-			result = 1;
-		} else if (intLevel [0] == 1 && intLevel [1] == 0) {
-			Debug.Log ("Excited and casual suit");
-			result = 2;
-		} else {
-			Debug.Log("Excited and super star eating salted egg");
-			result = 3;
+			result += intLevel [i] * (int)Math.Pow (2, organNumber - i - 1);
 		}
 	}
 
-	void reactionSecond(float[] bloodLevel){
+	void reaction(float[] bloodLevel){
 		// brain, stomach, spinalCord, lung
 		for (int i = 0; i < organNumber; i++) {
 			intLevel [i] = returnLevel (bloodLevel [i], collecteddata.threholds[i].lowLevel, collecteddata.threholds[i].highLevel);
-		}
-		if (intLevel [0] == 0 && intLevel [1] == 0 && intLevel [2] == 0) {
-			Debug.Log ("Nervous and hug with both arms and stand");
-			result = 0;
-		} else if (intLevel [0] == 0 && intLevel [1] == 0 && intLevel [2] == 1) {
-			Debug.Log ("Nervous and hug with both arms and stand by one foot like a bird");
-			result = 1;
-		} else if (intLevel [0] == 1 && intLevel [1] == 0 && intLevel [2] == 2) {
-			Debug.Log ("Nervous and hug with both arms and sit on the floor");
-			result = 2;
-		} else if (intLevel [0] == 1 && intLevel [1] == 1 && intLevel [2] == 0){
-			Debug.Log("Excited and super star eating salted egg");
-			result = 3;
-		}
-	}
-
-	void reactionThird(float[] bloodLevel){
-		// brain, stomach, spinalCord, lung
-		for (int i = 0; i < organNumber; i++) {
-			intLevel [i] = returnLevel (bloodLevel [i], collecteddata.threholds[i].lowLevel, collecteddata.threholds[i].highLevel);
-		}
-		if (intLevel [0] == 0 && intLevel [1] == 0) {
-			Debug.Log ("Sleepy and casual suit");
-			result = 0;
-		} else if (intLevel [0] == 0 && intLevel [1] == 1) {
-			Debug.Log ("Sleepy and super star eating salted egg ");
-			result = 1;
-		} else if (intLevel [0] == 1 && intLevel [1] == 0) {
-			Debug.Log ("Excited and casual suit");
-			result = 2;
-		} else {
-			Debug.Log("Excited and super star eating salted egg");
-			result = 3;
+			result += intLevel [i] * (int)Math.Pow (3, organNumber - i - 1);
 		}
 	}
 

@@ -69,7 +69,6 @@ public class OrganManager : MonoBehaviour {
 		if (Input.GetMouseButtonDown(1)) {//right click
 			DisableLine ();
 		}
-
 	}
 
 	IEnumerator MeterRotate(){
@@ -142,11 +141,6 @@ public class OrganManager : MonoBehaviour {
 			}else{
 				ReBalanceScores (scoreStep);
 			}
-			Debug.Log (organComps [0].score);
-			Debug.Log (organComps [1].score);
-			Debug.Log (organComps [2].score);
-			Debug.Log (organComps [3].score);
-			Debug.Log (",");
 
 		}
 	}
