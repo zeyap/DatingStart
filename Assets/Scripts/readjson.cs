@@ -69,6 +69,7 @@ public class readjson : MonoBehaviour {
 //				Debug.Log (collecteddataFirst.threholds [i].organ + ": " + bloodLevel [i]);
 			}
 			reactionFirst (bloodLevel);	
+			Debug.log("zeya");
 
 		} else {
 			for (int i = 0; i < organNumber; i++) {
