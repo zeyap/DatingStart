@@ -4,13 +4,13 @@ using UnityEngine;
 using System.IO;   
 using System;
 
-[System.Serializable]
-public class ThreholdFirst{
-
-	public string organ;
-	public int index;
-	public float middle;
-}
+//[System.Serializable]
+//public class ThreholdFirst{
+//
+//	public string organ;
+//	public int index;
+//	public float middle;
+//}
 	
 [System.Serializable]
 public class Threhold{
@@ -21,11 +21,11 @@ public class Threhold{
 	public float highLevel;
 }
 
-[System.Serializable]
-public class ThreholdCollectionFirst {
-
-	public List <ThreholdFirst> threholds;
-}
+//[System.Serializable]
+//public class ThreholdCollectionFirst {
+//
+//	public List <ThreholdFirst> threholds;
+//}
 
 [System.Serializable]
 public class ThreholdCollection {
@@ -36,7 +36,7 @@ public class ThreholdCollection {
 public class readjson : MonoBehaviour {
 //	define the class of threhold
 	public int section=1;
-	public ThreholdCollectionFirst collecteddataFirst = new ThreholdCollectionFirst();
+//	public ThreholdCollectionFirst collecteddataFirst = new ThreholdCollectionFirst();
 	public ThreholdCollection collecteddata = new ThreholdCollection();
 
 
@@ -65,16 +65,15 @@ public class readjson : MonoBehaviour {
 		if (organNumber == 2) {
 			for (int i = 0; i < organNumber; i++) {
 //				Debug.Log ("index" + collecteddataFirst.threholds [i].index);
-				bloodLevel [i] = scores [collecteddataFirst.threholds [i].index];
-//				Debug.Log (collecteddataFirst.threholds [i].organ + ": " + bloodLevel [i]);
+				bloodLevel [i] = scores [collecteddata.threholds [i].index];
+				Debug.Log (collecteddata.threholds [i].organ + ": " + bloodLevel [i]);
 			}
-			reactionFirst (bloodLevel);	
-			Debug.log("zeya");
+			reaction (bloodLevel);	
 
 		} else {
 			for (int i = 0; i < organNumber; i++) {
 				bloodLevel [i] = scores [collecteddata.threholds [i].index];
-//				Debug.Log (collecteddata.threholds [i].organ + ": " +bloodLevel [i]);
+				Debug.Log (collecteddata.threholds [i].organ + ": " +bloodLevel [i]);
 			}
 			reaction (bloodLevel);
 		} 
@@ -91,8 +90,8 @@ public class readjson : MonoBehaviour {
 			// Read the json from the file into a string
 			string dataAsJson = File.ReadAllText(filePath);
 			if (section == 1) {
-				JsonUtility.FromJsonOverwrite (dataAsJson, collecteddataFirst);
-				organNumber = collecteddataFirst.threholds.Count;
+				JsonUtility.FromJsonOverwrite (dataAsJson, collecteddata);
+				organNumber = collecteddata.threholds.Count;
 			} else {
 				JsonUtility.FromJsonOverwrite (dataAsJson, collecteddata);
 				organNumber = collecteddata.threholds.Count;
@@ -125,7 +124,7 @@ public class readjson : MonoBehaviour {
 	void reactionFirst(float[] bloodLevel){
 		// brain, stomach, spinalCord, lung
 		for (int i = 0; i < organNumber; i++) {
-			intLevel [i] = temreturnLevel (bloodLevel [i], collecteddataFirst.threholds[i].middle);
+			intLevel [i] = temreturnLevel (bloodLevel [i], collecteddata.threholds[i].lowLevel);
 			result += intLevel [i] * (int)Math.Pow (2, organNumber - i - 1);
 		}
 	}
