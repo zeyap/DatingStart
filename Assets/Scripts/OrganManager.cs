@@ -6,11 +6,11 @@ using UnityEngine.Events;
 public class OrganManager : MonoBehaviour {
 	const int organNum=4;
 	public GameObject organPrefab;
-	Transform canvasTrans;
+	static Transform canvasTrans;
 	static GameObject[] organs=new GameObject[organNum];
 	static Organ[] organComps=new Organ[organNum];
 
-	Vector3[] positions = new Vector3[organNum];
+	static Vector3[] positions = new Vector3[organNum];
 
 	private LineRenderer line;
 	public GameObject linePrefab;
@@ -21,8 +21,8 @@ public class OrganManager : MonoBehaviour {
 
 	GameObject meterHand;
 	float meterRot;
-	float lastPressTime;
-	float thisPressTime;
+	static float lastPressTime;
+	static float thisPressTime;
 
 	// Use this for initialization
 
@@ -36,30 +36,63 @@ public class OrganManager : MonoBehaviour {
 		line.startWidth = 2.0f;
 		line.endWidth=2.0f;
 	}
+
 	void Start () {
-		InitPositions ();
 		canvasTrans = GameObject.Find ("Canvas").transform;
 		meterHand = GameObject.Find ("meter_hand");
 		meterRot = 0;
+
 		for (int i = 0; i < organNum; i++) {
 			organs [i] = Instantiate (organPrefab,canvasTrans);
-			organs [i].transform.Translate (positions[i]);
 			organComps[i]=organs[i].GetComponent<Organ>();
 			organComps[i].index=i;
 		}
-			
+		InitLine (canvasTrans);
+
+		RefreshOrgans ();
+
+	}
+
+	public static void RefreshOrgans(){
+		InitPositions ();
+		for (int i = 0; i < organNum; i++) {
+			organs [i].transform.position=positions[i];
+		}
 		chosenCount = 0;
 		lastPressTime=0;
 		thisPressTime=0;
-
-		InitLine (canvasTrans);
 	}
 
-	void InitPositions(){
-		positions [0].x =190;positions [0].y =-17;positions [0].z =10;
-		positions [1].x=311;positions [1].y=-17;positions [1].z =10;
-		positions [2].x=190;positions [2].y=-138;positions [2].z =10;
-		positions [3].x=311;positions [3].y=-138;positions [3].z =10;
+	static void InitPositions(){
+		float x1 = Screen.width/2+225,y1 =Screen.height/2-86,x2=Screen.width/2+366,y2=Screen.height/2-207;
+		Vector3 posOut = new Vector3 (999,999,0);
+
+		int level = LevelManager.GetLevel();
+
+		switch (level) {
+		case 1:
+			{
+				positions [0].x =posOut.x;positions [0].y =posOut.y;positions [0].z =10;//heart
+				positions [1].x=x2;positions [1].y=y1;positions [1].z =10;//brain
+				positions [2].x=posOut.x;positions [2].y=posOut.y;positions [2].z =10;//stomach
+				positions [3].x=x2;positions [3].y=y2;positions [3].z =10;//spine
+				break;}
+		case 2:
+			{
+				positions [0].x =x1;positions [0].y =y1;positions [0].z =10;//heart
+				positions [1].x=x2;positions [1].y=y1;positions [1].z =10;//brain
+				positions [2].x=posOut.x;positions [2].y=posOut.y;positions [2].z =10;//stomach
+				positions [3].x=x2;positions [3].y=y2;positions [3].z =10;//spine
+				break;}
+		case 3:
+			{
+				positions [0].x =x1;positions [0].y =y1;positions [0].z =10;//heart
+				positions [1].x=x2;positions [1].y=y1;positions [1].z =10;//brain
+				positions [2].x=x1;positions [2].y=y2;positions [2].z =10;//stomach
+				positions [3].x=x2;positions [3].y=y2;positions [3].z =10;//spine
+				break;}
+		}
+
 	}
 	
 	// Update is called once per frame
@@ -83,7 +116,6 @@ public class OrganManager : MonoBehaviour {
 		}
 
 	}
-		
 
 	public static void RecordNewClick(int idx){
 		if (chosenCount < MaxChosenCount) {
