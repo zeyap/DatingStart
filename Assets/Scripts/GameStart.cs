@@ -75,7 +75,7 @@ public class GameStart : MonoBehaviour {
 			}
 			else
 			{
-				//bad scene
+				SceneManager.LoadScene ("BadEnding",LoadSceneMode.Single);
 			}
 			OrganManager.RefreshOrgans ();
 		}
@@ -88,12 +88,12 @@ public class GameStart : MonoBehaviour {
 			}
 			else
 			{
-				//bad scene
+				SceneManager.LoadScene ("BadEnding",LoadSceneMode.Single);
 			}
 			OrganManager.RefreshOrgans ();
 		}
 		if (level == 3.0f) {
-			SceneManager.LoadScene ("Ending",LoadSceneMode.Single);
+			SceneManager.LoadScene ("GoodEnding",LoadSceneMode.Single);
 		}
 
 		Debug.Log (LevelManager.GetFloatLevel());
