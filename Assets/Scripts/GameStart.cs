@@ -8,7 +8,7 @@ public class GameStart : MonoBehaviour {
 	Button startBtn;
 	Text timeTxt;
 	Text startTxt;
-	const float MaxReactionTime = 20;
+	const float MaxReactionTime = 5;
 	// Use this for initialization
 	void Start () {
 		startBtn = GameObject.Find ("startBtn").GetComponent<Button>();
@@ -53,6 +53,6 @@ public class GameStart : MonoBehaviour {
 			SceneManager.LoadScene ("Ending");
 		}
 		Timer.Init ();
-		Debug.Log (LevelManager.GetFloatLevel());
+		Debug.Log ("level" + LevelManager.GetFloatLevel());
 	}
 }
