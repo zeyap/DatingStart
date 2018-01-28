@@ -14,16 +14,29 @@ public class GameStart : MonoBehaviour {
 		startBtn = GameObject.Find ("startBtn").GetComponent<Button>();
 		timeTxt = GameObject.Find ("timeTxt").GetComponent<Text> ();
 		startTxt = GameObject.Find ("startTxt").GetComponent<Text> ();
-		Time.timeScale = 0;
 		startBtn.onClick.AddListener (OnClick);
+		StartCoroutine (CountDown());
+	}
+	IEnumerator CountDown(){
+		for(int i=3;i>=1;i--){
+			startTxt.text = i.ToString();
+			yield return new WaitForSeconds (1);
+		}
+		startTxt.text = "开始！";
+		yield return new WaitForSeconds (1);
+		OrganManager.RefreshOrgans ();
+		Resume ();
+		LevelManager.SetFloatLevel(1.1f);
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		float elapseTime = Timer.GetElapseTime ();
-		timeTxt.text = elapseTime.ToString("#.00");
-		if (elapseTime > MaxReactionTime) {
-			Freeze ();
+		if (LevelManager.GetFloatLevel () > 1.0f) {
+			float elapseTime = Timer.GetElapseTime ();
+			timeTxt.text = elapseTime.ToString ("#.00");
+			if (elapseTime > MaxReactionTime) {
+				Freeze ();
+			}
 		}
 	}
 
@@ -35,12 +48,7 @@ public class GameStart : MonoBehaviour {
 		
 	void OnClick(){
 		float level = LevelManager.GetFloatLevel ();
-		Time.timeScale = 1;
-		startBtn.gameObject.SetActive (false);
-		if (level == 1) {
-			LevelManager.SetFloatLevel(1.1f);
-			OrganManager.RefreshOrgans ();
-		}
+		Resume ();
 		if (level == 1.1f) {
 			LevelManager.SetFloatLevel(2.0f);
 			OrganManager.RefreshOrgans ();
@@ -52,7 +60,12 @@ public class GameStart : MonoBehaviour {
 		if (level == 3.0f) {
 			SceneManager.LoadScene ("Ending",LoadSceneMode.Single);
 		}
-		Timer.Init ();
 		Debug.Log (LevelManager.GetFloatLevel());
+	}
+
+	void Resume(){
+		Timer.Init ();
+		Time.timeScale = 1;
+		startBtn.gameObject.SetActive (false);
 	}
 }
