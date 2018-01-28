@@ -12,7 +12,7 @@ public class ChangeImage : MonoBehaviour{
     private Animation anim;
     private GameObject superman;
     private GameObject star;
-	private GameObject person;
+	private GameObject girl;
 	private int totalNumber;
 	private int level;
     private void Awake()
@@ -30,6 +30,7 @@ public class ChangeImage : MonoBehaviour{
 
     // Use this for initialization
     void Start () {
+        girl = GameObject.Find("girl");
         choice = totalNumber;
         anim = GetComponent<Animation>();
 		totalNumber = readjson.getTotalNumber ();
@@ -94,7 +95,9 @@ public class ChangeImage : MonoBehaviour{
 				if (choice < totalNumber) {	
 					Sprite s = (Sprite)spriteListThird [choice];
 					GetComponent<SpriteRenderer> ().sprite = s;
-				}
+                    Sprite g = (Sprite)spriteListThirdGirl[choice];
+                    girl.GetComponent<SpriteRenderer>().sprite = g;
+                }
 			}
 		}
 	}
