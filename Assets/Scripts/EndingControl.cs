@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class EndingControl : MonoBehaviour {
 
@@ -11,8 +12,8 @@ public class EndingControl : MonoBehaviour {
 	// Use this for initialization
 	int spriteNum;
 	string prefix;
-	const int totalFrame = 90;
-	float offset=9;
+	const int totalFrame = 60;
+	float offset=15;
 	Vector3[] positions=new Vector3[totalFrame];
 	void Start () {
 		imgCanvas = GameObject.Find ("image");
@@ -51,7 +52,10 @@ public class EndingControl : MonoBehaviour {
 				}
 			}
 		}
+
+		SceneManager.LoadScene ("main");
 	}
+
 	IEnumerator Subtitle(int spriteNum){
 		switch (spriteNum) {
 		case 1:
