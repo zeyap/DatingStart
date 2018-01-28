@@ -62,17 +62,17 @@ public class readjson : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		result = 0;
-		section = LevelManager.GetLevel() - 1;
-		organNumber = collecteddatas [section].threholds.Count;
-		if (section == 2) {
-			totalNumber = (int)Math.Pow (3, organNumber - 1);
-		} else {
-			totalNumber = (int)Math.Pow (3, organNumber);
-		}
-	
-		float[] scores = OrganManager.loadScore ();
 		if (Timer.GetElapseTime () <= GameStart.getMaxtime ()) {
+			result = 0;
+			section = LevelManager.GetLevel() - 1;
+			organNumber = collecteddatas [section].threholds.Count;
+			if (section == 2) {
+				totalNumber = (int)Math.Pow (3, organNumber - 1);
+			} else {
+				totalNumber = (int)Math.Pow (3, organNumber);
+			}
+	
+			float[] scores = OrganManager.loadScore ();
 			if (organNumber == 2) {
 				for (int i = 0; i < organNumber; i++) {
 					//				Debug.Log ("index" + collecteddataFirst.threholds [i].index);
@@ -158,14 +158,14 @@ public class readjson : MonoBehaviour {
 		for (int i = 0; i < organNumber - 1; i++) {
 			result += intLevel [i] * (int)Math.Pow (3, organNumber - i - 2);
 		}
-		if(intLevel [organNumber] == 2){
+		if(intLevel [organNumber - 1] == 2){
 			iffart = true;
 		}
 	}
 		
 	public static int getResult(){
-		Debug.Log ("level" + LevelManager.GetFloatLevel());
-		Debug.Log ("time" + Timer.GetElapseTime ());
+//		Debug.Log ("level" + LevelManager.GetFloatLevel());
+//		Debug.Log ("time" + Timer.GetElapseTime ());
 		if (LevelManager.GetFloatLevel() == 1.0f) {
 			return totalNumber;
 		}

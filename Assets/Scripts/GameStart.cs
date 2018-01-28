@@ -9,7 +9,7 @@ public class GameStart : MonoBehaviour {
 	Text timeTxt;
 	Text startTxt;
 
-	const float MaxReactionTime = 5;
+	const float MaxReactionTime = 30;
 	private ArrayList backgroundList = new ArrayList();
 	private GameObject background;
 
@@ -77,7 +77,7 @@ public class GameStart : MonoBehaviour {
             }
             else
             {
-                //bad scene
+				SceneManager.LoadScene ("BadEnding",LoadSceneMode.Single);
             }
             OrganManager.RefreshOrgans ();
 		}
