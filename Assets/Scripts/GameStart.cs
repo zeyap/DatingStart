@@ -8,14 +8,10 @@ public class GameStart : MonoBehaviour {
 	Button startBtn;
 	Text timeTxt;
 	Text startTxt;
-<<<<<<< HEAD
 	const float MaxReactionTime = 5;
-=======
-	public float MaxReactionTime = 20;
 	private ArrayList backgroundList = new ArrayList();
 	private GameObject background;
 
->>>>>>> a5f8bbadc4dde542d306d54348c8084d9f6ef799
 	// Use this for initialization
 	void Start () {
 		startBtn = GameObject.Find ("startBtn").GetComponent<Button>();
@@ -99,13 +95,7 @@ public class GameStart : MonoBehaviour {
 		if (level == 3.0f) {
 			SceneManager.LoadScene ("GoodEnding",LoadSceneMode.Single);
 		}
-<<<<<<< HEAD
-		Timer.Init ();
 		Debug.Log ("level" + LevelManager.GetFloatLevel());
-=======
-
-		Debug.Log (LevelManager.GetFloatLevel());
->>>>>>> a5f8bbadc4dde542d306d54348c8084d9f6ef799
 	}
 	void Resume(){
 		Timer.Init ();
