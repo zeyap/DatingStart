@@ -4,8 +4,7 @@ using UnityEngine.UI;
 using UnityEngine;
 
 public class ChangeImage : MonoBehaviour{
-    public int choice;
-    private static bool flag;
+    private static int choice;
     private ArrayList spriteListFirst = new ArrayList();
 	private ArrayList spriteListSecond = new ArrayList();
     private Animation anim;
@@ -21,20 +20,14 @@ public class ChangeImage : MonoBehaviour{
         star.SetActive(false);
     }
 
-    public static bool getFlag()
+    public static int getChoice()
     {
-        return flag;
-    }
-
-    public static void setFlag(bool f)
-    {
-        flag = f;
+        return choice;
     }
 
     // Use this for initialization
     void Start () {
         choice = totalNumber;
-        flag = false;
         anim = GetComponent<Animation>();
 		totalNumber = readjson.getTotalNumber ();
 		for (int i = 0; i <= 9; i++)
@@ -64,16 +57,11 @@ public class ChangeImage : MonoBehaviour{
 				Sprite s = (Sprite)spriteListFirst [choice];
 				GetComponent<SpriteRenderer> ().sprite = s;
 			}
-            if(choice == 7)
-            {
-                flag = true;
-            }
 		} else if (level == 2) {
 			if (choice < totalNumber) {	
 				Sprite s = (Sprite)spriteListSecond [choice];
 				GetComponent<SpriteRenderer> ().sprite = s;
-			}	
+			}
 		}
-
     }
 }

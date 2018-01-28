@@ -47,7 +47,6 @@ public class GameStart : MonoBehaviour {
 		
 	void OnClick(){
 		float level = LevelManager.GetFloatLevel ();
-        bool flag = ChangeImage.getFlag();
 		Time.timeScale = 1;
 		startBtn.gameObject.SetActive (false);
 		if (level == 1) {
@@ -55,11 +54,10 @@ public class GameStart : MonoBehaviour {
 			OrganManager.RefreshOrgans ();
 		}
 		if (level == 1.1f) {
-            if (flag)
+            if (ChangeImage.getChoice() == 7)
             {
                 LevelManager.SetFloatLevel(2.0f);
                 background.GetComponent<SpriteRenderer>().sprite = (Sprite)backgroundList[1];
-                ChangeImage.setFlag(false);
             }
             else
             {
@@ -68,11 +66,10 @@ public class GameStart : MonoBehaviour {
             OrganManager.RefreshOrgans ();
 		}
 		if (level == 2.0f) {
-            if (flag)
+            if (ChangeImage.getChoice() == 21)
             {
                 LevelManager.SetFloatLevel(3.0f);
                 background.GetComponent<SpriteRenderer>().sprite = (Sprite)backgroundList[2];
-                ChangeImage.setFlag(false);
             }
             else
             {
