@@ -63,25 +63,33 @@ public class readjson : MonoBehaviour {
 	void Update () {
 		result = 0;
 		section = LevelManager.GetLevel() - 1;
-		organNumber = collecteddatas[section].threholds.Count;
-		totalNumber = (int)Math.Pow (3, organNumber);
+		organNumber = collecteddatas [section].threholds.Count;
+		if (section == 2) {
+			totalNumber = (int)Math.Pow (3, organNumber - 1);
+		} else {
+			totalNumber = (int)Math.Pow (3, organNumber);
+		}
+	
 		float[] scores = OrganManager.loadScore ();
 		if (organNumber == 2) {
 			for (int i = 0; i < organNumber; i++) {
 //				Debug.Log ("index" + collecteddataFirst.threholds [i].index);
-				bloodLevel [i] = scores [collecteddatas[section].threholds [i].index];
+				bloodLevel [i] = scores [collecteddatas [section].threholds [i].index];
 //				Debug.Log (collecteddatas[section].threholds [i].organ + ": " + bloodLevel [i]);
 			}
 			reaction (bloodLevel);	
 
 		} else {
 			for (int i = 0; i < organNumber; i++) {
-				bloodLevel [i] = scores [collecteddatas[section].threholds [i].index];
+				bloodLevel [i] = scores [collecteddatas [section].threholds [i].index];
 //				Debug.Log (collecteddatas[section].threholds [i].organ + ": " + bloodLevel [i]);
 			}
-			reaction (bloodLevel);
-		} 
-
+			if (section == 2) {
+				reactionThird (bloodLevel);
+			} else {
+				reaction (bloodLevel);
+			}
+		}
 	}
 
 	public void LoadGameData()
@@ -136,6 +144,16 @@ public class readjson : MonoBehaviour {
 		for (int i = 0; i < organNumber; i++) {
 			intLevel [i] = returnLevel (bloodLevel [i], collecteddatas[section].threholds[i].lowLevel, collecteddatas[section].threholds[i].highLevel);
 			result += intLevel [i] * (int)Math.Pow (3, organNumber - i - 1);
+		}
+	}
+
+	void reactionThird(float[] bloodLevel){
+		// brain, stomach, spinalCord, lung
+		for (int i = 0; i < organNumber; i++) {
+			intLevel [i] = returnLevel (bloodLevel [i], collecteddatas[section].threholds[i].lowLevel, collecteddatas[section].threholds[i].highLevel);
+		}
+		for (int i = 0; i < organNumber - 1; i++) {
+			result += intLevel [i] * (int)Math.Pow (3, organNumber - i - 2);
 		}
 	}
 		

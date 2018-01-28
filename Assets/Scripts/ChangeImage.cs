@@ -4,13 +4,15 @@ using UnityEngine.UI;
 using UnityEngine;
 
 public class ChangeImage : MonoBehaviour{
-    public int choice;
-    private static bool flag;
+    private static int choice;
     private ArrayList spriteListFirst = new ArrayList();
 	private ArrayList spriteListSecond = new ArrayList();
+	private ArrayList spriteListThird = new ArrayList();
+	private ArrayList spriteListThirdGirl = new ArrayList();
     private Animation anim;
     private GameObject superman;
     private GameObject star;
+	private GameObject person;
 	private int totalNumber;
 	private int level;
     private void Awake()
@@ -21,20 +23,14 @@ public class ChangeImage : MonoBehaviour{
         star.SetActive(false);
     }
 
-    public static bool getFlag()
+    public static int getChoice()
     {
-        return flag;
-    }
-
-    public static void setFlag(bool f)
-    {
-        flag = f;
+        return choice;
     }
 
     // Use this for initialization
     void Start () {
         choice = totalNumber;
-        flag = false;
         anim = GetComponent<Animation>();
 		totalNumber = readjson.getTotalNumber ();
 		for (int i = 0; i <= 9; i++)
@@ -49,6 +45,18 @@ public class ChangeImage : MonoBehaviour{
 			Sprite s = Resources.Load<Sprite>(fileName);
 			spriteListSecond.Add(s);
 		}
+		for (int i = 0; i <= 27; i++)
+		{
+			string fileName = "3_" + i.ToString();
+			Sprite s = Resources.Load<Sprite>(fileName);
+			spriteListThird.Add(s);
+		}
+		for (int i = 0; i <= 27; i++)
+		{
+			string fileName = "31_" + i.ToString();
+			Sprite s = Resources.Load<Sprite>(fileName);
+			spriteListThirdGirl.Add(s);
+		}
 		GetComponent<SpriteRenderer>().sprite = (Sprite)spriteListFirst[totalNumber];
         anim.Play("fadein");
     }
@@ -59,21 +67,35 @@ public class ChangeImage : MonoBehaviour{
 		level = LevelManager.GetLevel ();
 		totalNumber = readjson.getTotalNumber ();
 		Debug.Log("result:" + choice);
-		if (level == 1) {
-			if (choice < totalNumber) {
-				Sprite s = (Sprite)spriteListFirst [choice];
+
+		if (Timer.GetElapseTime() == 0) {
+			if (level == 1) {
+				Sprite s = (Sprite)spriteListFirst [totalNumber];
+				GetComponent<SpriteRenderer> ().sprite = s;
+			} else if (level == 2) {
+				Sprite s = (Sprite)spriteListSecond [totalNumber];
+				GetComponent<SpriteRenderer> ().sprite = s;
+			} else if (level == 3) {
+				Sprite s = (Sprite)spriteListThird [totalNumber];
 				GetComponent<SpriteRenderer> ().sprite = s;
 			}
-            if(choice == 7)
-            {
-                flag = true;
-            }
-		} else if (level == 2) {
-			if (choice < totalNumber) {	
-				Sprite s = (Sprite)spriteListSecond [choice];
-				GetComponent<SpriteRenderer> ().sprite = s;
-			}	
+		}else{
+			if (level == 1) {
+				if (choice < totalNumber) {
+					Sprite s = (Sprite)spriteListFirst [choice];
+					GetComponent<SpriteRenderer> ().sprite = s;
+				}
+			} else if (level == 2) {
+				if (choice < totalNumber) {	
+					Sprite s = (Sprite)spriteListSecond [choice];
+					GetComponent<SpriteRenderer> ().sprite = s;
+				}	
+			} else if (level == 3) {
+				if (choice < totalNumber) {	
+					Sprite s = (Sprite)spriteListThird [choice];
+					GetComponent<SpriteRenderer> ().sprite = s;
+				}
+			}
 		}
-
-    }
+	}
 }
