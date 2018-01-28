@@ -36,7 +36,7 @@ public class GameStart : MonoBehaviour {
 			startTxt.text = i.ToString();
 			yield return new WaitForSeconds (1);
 		}
-		startTxt.text = "开始！";
+		startTxt.text = "Dating Start！";
 		yield return new WaitForSeconds (1);
 		OrganManager.RefreshOrgans ();
 		Resume ();
@@ -55,7 +55,7 @@ public class GameStart : MonoBehaviour {
 	void Freeze(){
 		Time.timeScale = 0;
 		startBtn.gameObject.SetActive (true);
-		startTxt.text = "时间到~";
+		startTxt.text = "Time's Up! _(:3JL)_";
 	}
 
 	void OnClick(){

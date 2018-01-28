@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: 56d53058ac57f384dacc713be3237aa0
+timeCreated: 1517116837
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: HappyZcool-2016
+  fontNames:
+  - HappyZcool-2016
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
