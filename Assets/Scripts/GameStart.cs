@@ -9,10 +9,10 @@ public class GameStart : MonoBehaviour {
 	Text timeTxt;
 	Text startTxt;
 
-	const float MaxReactionTime = 30;
+	static public float MaxReactionTime = 30;
 	private ArrayList backgroundList = new ArrayList();
 	private GameObject background;
-
+	float elapseTime;
  
 	// Use this for initialization
 	void Start () {
@@ -47,7 +47,11 @@ public class GameStart : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		float elapseTime = Timer.GetElapseTime ();
+		if (Input.GetMouseButton(2)) {
+			elapseTime = MaxReactionTime+0.1f;
+		} else {
+			elapseTime = Timer.GetElapseTime ();
+		}
 		timeTxt.text = elapseTime.ToString("#.00");
 		if (elapseTime > MaxReactionTime) {
 			Freeze ();
@@ -94,7 +98,18 @@ public class GameStart : MonoBehaviour {
 			OrganManager.RefreshOrgans ();
 		}
 		if (level == 3.0f) {
-			SceneManager.LoadScene ("GoodEnding",LoadSceneMode.Single);
+			if (ChangeImage.getChoice() == 4)
+			{
+				LevelManager.SetFloatLevel(4.0f);
+			}
+			else
+			{
+				SceneManager.LoadScene ("BadEnding",LoadSceneMode.Single);
+			}
+			OrganManager.RefreshOrgans ();
+		}
+		if (level == 4.0f) {
+			SceneManager.LoadScene ("GoodEnding", LoadSceneMode.Single);
 		}
 //		Debug.Log ("level" + LevelManager.GetFloatLevel());
 	}

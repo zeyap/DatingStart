@@ -24,6 +24,8 @@ public class OrganManager : MonoBehaviour {
 	static float lastPressTime;
 	static float thisPressTime;
 
+	static float x1,y1,x2,y2;
+
 	// Use this for initialization
 
 	void OnEnable(){
@@ -33,8 +35,29 @@ public class OrganManager : MonoBehaviour {
 
 	void InitLine(Transform parent){
 		line = GameObject.Instantiate (linePrefab, linePrefab.transform.position, transform.rotation).GetComponent<LineRenderer>();
-		line.startWidth = 2.0f;
-		line.endWidth=2.0f;
+		line.startWidth = 10.0f;
+		line.endWidth=4.0f;
+	}
+
+	void Awake(){
+		
+		organs [0] =GameObject.Find("organ0");//heart
+		organs [1]=GameObject.Find("organ1");//brain
+		organs [2]=GameObject.Find("organ2");//stomach
+		organs [3]=GameObject.Find("organ3");//spine
+
+		for (int i = 0; i < organNum; i++) {
+			organComps[i]=organs[i].GetComponent<Organ>();
+			organComps[i].index=i;
+			positions [i] =organComps [i].transform.position;
+		}
+
+		x1 = positions [0].x;
+		x2 = positions [1].x;
+
+		y1 = positions [0].y;
+		y2 = positions [2].y;
+
 	}
 
 	void Start () {
@@ -42,11 +65,6 @@ public class OrganManager : MonoBehaviour {
 		meterHand = GameObject.Find ("meter_hand");
 		meterRot = 0;
 
-		for (int i = 0; i < organNum; i++) {
-			organs [i] = Instantiate (organPrefab,canvasTrans);
-			organComps[i]=organs[i].GetComponent<Organ>();
-			organComps[i].index=i;
-		}
 		InitLine (canvasTrans);
 
 		RefreshOrgans ();
@@ -64,7 +82,7 @@ public class OrganManager : MonoBehaviour {
 	}
 
 	static void InitPositions(){
-		float x1 = Screen.width/2+225,y1 =Screen.height/2-86,x2=Screen.width/2+366,y2=Screen.height/2-207;
+		
 		Vector3 posOut = new Vector3 (999,999,0);
 
 		int level = LevelManager.GetLevel();
@@ -73,23 +91,23 @@ public class OrganManager : MonoBehaviour {
 		case 1:
 			{
 				positions [0].x =posOut.x;positions [0].y =posOut.y;positions [0].z =10;//heart
-				positions [1].x=x2;positions [1].y=y1;positions [1].z =10;//brain
+				positions [1].x =x2;positions [1].y =y1;positions [1].z =10;
 				positions [2].x=posOut.x;positions [2].y=posOut.y;positions [2].z =10;//stomach
-				positions [3].x=x2;positions [3].y=y2;positions [3].z =10;//spine
+				positions [3].x =x2;positions [3].y =y2;positions [3].z =10;
 				break;}
 		case 2:
 			{
-				positions [0].x =x1;positions [0].y =y1;positions [0].z =10;//heart
-				positions [1].x=x2;positions [1].y=y1;positions [1].z =10;//brain
+				positions [0].x =x1;positions [0].y =y1;positions [0].z =10;
+				positions [1].x =x2;positions [1].y =y1;positions [1].z =10;
 				positions [2].x=posOut.x;positions [2].y=posOut.y;positions [2].z =10;//stomach
-				positions [3].x=x2;positions [3].y=y2;positions [3].z =10;//spine
+				positions [3].x =x2;positions [3].y =y2;positions [3].z =10;
 				break;}
 		case 3:
 			{
-				positions [0].x =x1;positions [0].y =y1;positions [0].z =10;//heart
-				positions [1].x=x2;positions [1].y=y1;positions [1].z =10;//brain
-				positions [2].x=x1;positions [2].y=y2;positions [2].z =10;//stomach
-				positions [3].x=x2;positions [3].y=y2;positions [3].z =10;//spine
+				positions [0].x =x1;positions [0].y =y1;positions [0].z =10;
+				positions [1].x =x2;positions [1].y =y1;positions [1].z =10;
+				positions [2].x =x1;positions [2].y =y2;positions [2].z =10;
+				positions [3].x =x2;positions [3].y =y2;positions [3].z =10;
 				break;}
 		}
 

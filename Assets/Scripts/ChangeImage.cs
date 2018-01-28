@@ -17,10 +17,10 @@ public class ChangeImage : MonoBehaviour{
 	private int level;
     private void Awake()
     {
-        superman = GameObject.Find("superman");
-        superman.SetActive(false);
-        star = GameObject.Find("star");
-        star.SetActive(false);
+        //superman = GameObject.Find("superman");
+       // superman.SetActive(false);
+        //star = GameObject.Find("star");
+        //star.SetActive(false);
     }
 
     public static int getChoice()
@@ -79,6 +79,8 @@ public class ChangeImage : MonoBehaviour{
 			} else if (level == 3) {
 				Sprite s = (Sprite)spriteListThird [totalNumber];
 				GetComponent<SpriteRenderer> ().sprite = s;
+				Sprite g = (Sprite)spriteListThirdGirl[totalNumber];
+				girl.GetComponent<SpriteRenderer>().sprite = g;
 			}
 		}else{
 			if (level == 1) {
