@@ -10,14 +10,14 @@ public class EndingControl : MonoBehaviour {
 	// Use this for initialization
 	int spriteNum;
 	string prefix;
-	const int totalFrame = 30;
+	const int totalFrame = 90;
 	float offset=9;
 	Vector3[] positions=new Vector3[totalFrame];
 	void Start () {
 		imgCanvas = GameObject.Find ("image");
 		for (int i = 0; i < totalFrame; i++) {
 			positions [i].x = imgCanvas.transform.position.x;
-			positions [i].y = offset*i;
+			positions [i].y = offset*(i-10);
 		}
 		if (endMode == 0) {
 			spriteNum = 6;
@@ -34,10 +34,14 @@ public class EndingControl : MonoBehaviour {
 			string fname = prefix + i.ToString ();
 			Sprite newSprite = Resources.Load<Sprite> (fname);
 			imgCanvas.GetComponent<Image> ().sprite = newSprite;
-			for(int j=0;j<totalFrame;j++){
-				imgCanvas.transform.position=positions[j];
-				yield return new WaitForSeconds (0.2f);
+			if (i == 1 || i == 2) {
+				
+			} else {
+				for(int j=0;j<totalFrame;j++){
+					imgCanvas.transform.position=positions[j];
+				}
 			}
+			yield return new WaitForSeconds (0.1f);
 
 		}
 	}
