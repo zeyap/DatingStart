@@ -8,10 +8,17 @@ public class GameStart : MonoBehaviour {
 	Button startBtn;
 	Text timeTxt;
 	Text startTxt;
+<<<<<<< HEAD
 	const float MaxReactionTime = 5;
 	private ArrayList backgroundList = new ArrayList();
 	private GameObject background;
+=======
+	public float MaxReactionTime = 20;
+>>>>>>> 64e15db9b1fb31bfd971b6818d94c74853a92daf
 
+    private ArrayList backgroundList = new ArrayList();
+    private GameObject background;
+ 
 	// Use this for initialization
 	void Start () {
 		startBtn = GameObject.Find ("startBtn").GetComponent<Button>();
@@ -60,32 +67,31 @@ public class GameStart : MonoBehaviour {
 
 	void OnClick(){
 		float level = LevelManager.GetFloatLevel ();
-		bool flag = ChangeImage.getFlag();
+		Time.timeScale = 1;
+		startBtn.gameObject.SetActive (false);
 		Resume ();
 		if (level == 1) {
 			LevelManager.SetFloatLevel(1.1f);
 			OrganManager.RefreshOrgans ();
 		}
 		if (level == 1.1f) {
-			if (flag)
-			{
-				LevelManager.SetFloatLevel(2.0f);
-				background.GetComponent<SpriteRenderer>().sprite = (Sprite)backgroundList[1];
-				ChangeImage.setFlag(false);
-			}
-			else
-			{
-				SceneManager.LoadScene ("BadEnding",LoadSceneMode.Single);
-			}
-			OrganManager.RefreshOrgans ();
+            if (ChangeImage.getChoice() == 7)
+            {
+                LevelManager.SetFloatLevel(2.0f);
+                background.GetComponent<SpriteRenderer>().sprite = (Sprite)backgroundList[1];
+            }
+            else
+            {
+                //bad scene
+            }
+            OrganManager.RefreshOrgans ();
 		}
 		if (level == 2.0f) {
-			if (flag)
-			{
-				LevelManager.SetFloatLevel(3.0f);
-				background.GetComponent<SpriteRenderer>().sprite = (Sprite)backgroundList[2];
-				ChangeImage.setFlag(false);
-			}
+            if (ChangeImage.getChoice() == 21)
+            {
+                LevelManager.SetFloatLevel(3.0f);
+                background.GetComponent<SpriteRenderer>().sprite = (Sprite)backgroundList[2];
+            }
 			else
 			{
 				SceneManager.LoadScene ("BadEnding",LoadSceneMode.Single);
@@ -97,6 +103,7 @@ public class GameStart : MonoBehaviour {
 		}
 		Debug.Log ("level" + LevelManager.GetFloatLevel());
 	}
+
 	void Resume(){
 		Timer.Init ();
 		Time.timeScale = 1;
