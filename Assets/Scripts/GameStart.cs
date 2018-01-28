@@ -8,16 +8,11 @@ public class GameStart : MonoBehaviour {
 	Button startBtn;
 	Text timeTxt;
 	Text startTxt;
-<<<<<<< HEAD
+
 	const float MaxReactionTime = 5;
 	private ArrayList backgroundList = new ArrayList();
 	private GameObject background;
-=======
-	public float MaxReactionTime = 20;
->>>>>>> 64e15db9b1fb31bfd971b6818d94c74853a92daf
 
-    private ArrayList backgroundList = new ArrayList();
-    private GameObject background;
  
 	// Use this for initialization
 	void Start () {

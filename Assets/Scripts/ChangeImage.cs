@@ -72,7 +72,6 @@ public class ChangeImage : MonoBehaviour{
 			if (level == 1) {
 				Sprite s = (Sprite)spriteListFirst [totalNumber];
 				GetComponent<SpriteRenderer> ().sprite = s;
-<<<<<<< HEAD
 			} else if (level == 2) {
 				Sprite s = (Sprite)spriteListSecond [totalNumber];
 				GetComponent<SpriteRenderer> ().sprite = s;
@@ -99,14 +98,4 @@ public class ChangeImage : MonoBehaviour{
 			}
 		}
 	}
-=======
-			}
-		} else if (level == 2) {
-			if (choice < totalNumber) {	
-				Sprite s = (Sprite)spriteListSecond [choice];
-				GetComponent<SpriteRenderer> ().sprite = s;
-			}
-		}
-    }
->>>>>>> 64e15db9b1fb31bfd971b6818d94c74853a92daf
 }
