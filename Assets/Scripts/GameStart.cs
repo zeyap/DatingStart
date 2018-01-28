@@ -96,7 +96,7 @@ public class GameStart : MonoBehaviour {
 		if (level == 3.0f) {
 			SceneManager.LoadScene ("GoodEnding",LoadSceneMode.Single);
 		}
-		Debug.Log ("level" + LevelManager.GetFloatLevel());
+//		Debug.Log ("level" + LevelManager.GetFloatLevel());
 	}
 
 	void Resume(){
@@ -104,5 +104,9 @@ public class GameStart : MonoBehaviour {
 		Time.timeScale = 1;
 		startBtn.gameObject.SetActive (false);
 		timeTxt.gameObject.SetActive (true);
+	}
+
+	public static float getMaxtime(){
+		return MaxReactionTime;
 	}
 }

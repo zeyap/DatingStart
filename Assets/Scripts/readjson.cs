@@ -43,6 +43,7 @@ public class readjson : MonoBehaviour {
 	public float[] bloodLevel = new float[4]; 
 	public static int result = 0;
 	public static int totalNumber = 0;
+	public static bool iffart = false;
 
 //	public string gameDataFileName = "Items/threholdFirst.json";
 	public List<string> FileName;
@@ -71,23 +72,25 @@ public class readjson : MonoBehaviour {
 		}
 	
 		float[] scores = OrganManager.loadScore ();
-		if (organNumber == 2) {
-			for (int i = 0; i < organNumber; i++) {
-//				Debug.Log ("index" + collecteddataFirst.threholds [i].index);
-				bloodLevel [i] = scores [collecteddatas [section].threholds [i].index];
-//				Debug.Log (collecteddatas[section].threholds [i].organ + ": " + bloodLevel [i]);
-			}
-			reaction (bloodLevel);	
+		if (Timer.GetElapseTime () <= GameStart.getMaxtime ()) {
+			if (organNumber == 2) {
+				for (int i = 0; i < organNumber; i++) {
+					//				Debug.Log ("index" + collecteddataFirst.threholds [i].index);
+					bloodLevel [i] = scores [collecteddatas [section].threholds [i].index];
+					//				Debug.Log (collecteddatas[section].threholds [i].organ + ": " + bloodLevel [i]);
+				}
+				reaction (bloodLevel);	
 
-		} else {
-			for (int i = 0; i < organNumber; i++) {
-				bloodLevel [i] = scores [collecteddatas [section].threholds [i].index];
-//				Debug.Log (collecteddatas[section].threholds [i].organ + ": " + bloodLevel [i]);
-			}
-			if (section == 2) {
-				reactionThird (bloodLevel);
 			} else {
-				reaction (bloodLevel);
+				for (int i = 0; i < organNumber; i++) {
+					bloodLevel [i] = scores [collecteddatas [section].threholds [i].index];
+					//				Debug.Log (collecteddatas[section].threholds [i].organ + ": " + bloodLevel [i]);
+				}
+				if (section == 2) {
+					reactionThird (bloodLevel);
+				} else {
+					reaction (bloodLevel);
+				}
 			}
 		}
 	}
@@ -155,13 +158,25 @@ public class readjson : MonoBehaviour {
 		for (int i = 0; i < organNumber - 1; i++) {
 			result += intLevel [i] * (int)Math.Pow (3, organNumber - i - 2);
 		}
+		if(intLevel [organNumber] == 2){
+			iffart = true;
+		}
 	}
 		
 	public static int getResult(){
+		Debug.Log ("level" + LevelManager.GetFloatLevel());
+		Debug.Log ("time" + Timer.GetElapseTime ());
+		if (LevelManager.GetFloatLevel() == 1.0f) {
+			return totalNumber;
+		}
 		return result;
 	}
 
 	public static int getTotalNumber(){
 		return totalNumber;
+	}
+
+	public static bool getIfFart(){
+		return iffart;
 	}
 }
