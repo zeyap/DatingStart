@@ -8,11 +8,17 @@ public class GameStart : MonoBehaviour {
 	Button startBtn;
 	Text timeTxt;
 	Text startTxt;
+<<<<<<< HEAD
 	public float MaxReactionTime = 20;
     private ArrayList backgroundList = new ArrayList();
     private GameObject background;
     // Use this for initialization
     void Start () {
+=======
+	const float MaxReactionTime = 30;
+	// Use this for initialization
+	void Start () {
+>>>>>>> b7d868e46e02c8c94c2ce6215d68da58bbbbfa78
 		startBtn = GameObject.Find ("startBtn").GetComponent<Button>();
 		timeTxt = GameObject.Find ("timeTxt").GetComponent<Text> ();
 		startTxt = GameObject.Find ("startTxt").GetComponent<Text> ();
@@ -80,7 +86,7 @@ public class GameStart : MonoBehaviour {
 			OrganManager.RefreshOrgans ();
 		}
 		if (level == 3.0f) {
-			SceneManager.LoadScene ("Ending");
+			SceneManager.LoadScene ("Ending",LoadSceneMode.Single);
 		}
 		Timer.Init ();
 		Debug.Log (LevelManager.GetFloatLevel());
