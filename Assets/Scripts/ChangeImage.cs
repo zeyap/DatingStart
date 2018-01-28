@@ -4,7 +4,8 @@ using UnityEngine.UI;
 using UnityEngine;
 
 public class ChangeImage : MonoBehaviour{
-    public int choice = 9;
+    public int choice;
+    private static bool flag;
     private ArrayList spriteListFirst = new ArrayList();
 	private ArrayList spriteListSecond = new ArrayList();
 	private ArrayList spriteListThird = new ArrayList();
@@ -15,14 +16,33 @@ public class ChangeImage : MonoBehaviour{
 	private GameObject person;
 	private int totalNumber;
 	private int level;
-    // Use this for initialization
-    void Start () {
-        anim = GetComponent<Animation>();
+    private void Awake()
+    {
         superman = GameObject.Find("superman");
         superman.SetActive(false);
         star = GameObject.Find("star");
         star.SetActive(false);
+<<<<<<< HEAD
 
+=======
+    }
+
+    public static bool getFlag()
+    {
+        return flag;
+    }
+
+    public static void setFlag(bool f)
+    {
+        flag = f;
+    }
+
+    // Use this for initialization
+    void Start () {
+        choice = totalNumber;
+        flag = false;
+        anim = GetComponent<Animation>();
+>>>>>>> a5f8bbadc4dde542d306d54348c8084d9f6ef799
 		totalNumber = readjson.getTotalNumber ();
 		for (int i = 0; i <= 9; i++)
         {
@@ -63,11 +83,22 @@ public class ChangeImage : MonoBehaviour{
 			if (level == 1) {
 				Sprite s = (Sprite)spriteListFirst [totalNumber];
 				GetComponent<SpriteRenderer> ().sprite = s;
+<<<<<<< HEAD
 			} else if (level == 2) {
 				Sprite s = (Sprite)spriteListSecond [totalNumber];
 				GetComponent<SpriteRenderer> ().sprite = s;
 			} else if (level == 3) {
 				Sprite s = (Sprite)spriteListThird [totalNumber];
+=======
+			}
+            if(choice == 7)
+            {
+                flag = true;
+            }
+		} else if (level == 2) {
+			if (choice < totalNumber) {	
+				Sprite s = (Sprite)spriteListSecond [choice];
+>>>>>>> a5f8bbadc4dde542d306d54348c8084d9f6ef799
 				GetComponent<SpriteRenderer> ().sprite = s;
 			}
 		}else{
