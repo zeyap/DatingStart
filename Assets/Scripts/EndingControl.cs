@@ -7,7 +7,7 @@ public class EndingControl : MonoBehaviour {
 
 	GameObject imgCanvas;
 	Text subtext;
-	int endMode=0;//0-good or 1-bad
+	public int endMode;//0-good or 1-bad
 	// Use this for initialization
 	int spriteNum;
 	string prefix;
